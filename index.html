@@ -1,0 +1,850 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Welcome to pypath! &#8212; pypath 0.16.9 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=77553476" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/css/pypathdocs.css?v=b64fc3cb" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=fa0329c2"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <link rel="icon" href="_static/omnipath-logo.svg"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Webservice" href="webservice.html" />
+    <link rel="prev" title="Contents" href="contents.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="contents.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/omnipath-logo.svg" class="logo__image only-light" alt="Pypath"/>
+    <script>document.write(`<img src="_static/omnipath-logo.svg" class="logo__image only-dark" alt="Pypath"/>`);</script>
+  
+  
+    <p class="title logo__title">Pypath</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Welcome to pypath!
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="webservice.html">
+                        Webservice
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="releasehistory.html">
+                        Release history
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="reference.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="notebooks/manual.html">
+                        The pypath book
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/saezlab/pypath" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/omnipathdb" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pypath-omnipath" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-box fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://omnipathdb.org/" title="OmniPath" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-university fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">OmniPath</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://saezlab.org/" title="Saez Lab" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-users fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Saez Lab</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Welcome to pypath!
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="webservice.html">
+                        Webservice
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="releasehistory.html">
+                        Release history
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="reference.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="notebooks/manual.html">
+                        The pypath book
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/saezlab/pypath" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/omnipathdb" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pypath-omnipath" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-box fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://omnipathdb.org/" title="OmniPath" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-university fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">OmniPath</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://saezlab.org/" title="Saez Lab" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-users fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Saez Lab</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="contents.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Welcome to pypath!</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="welcome-to-pypath">
+<h1>Welcome to pypath!<a class="headerlink" href="#welcome-to-pypath" title="Link to this heading">§</a></h1>
+<p><img alt="Demo" src="https://raw.githubusercontent.com/saezlab/pypath/master/docs/source/_static/img/pypath-demo.webp" /></p>
+<section id="omnipath">
+<h2>OmniPath<a class="headerlink" href="#omnipath" title="Link to this heading">§</a></h2>
+<p>Are you interested in OmniPath data? Check out our R package <a class="reference external" href="https://r.omnipathdb.org">OmnipathR</a>,
+the most popular and most versatile access point to OmniPath, a database
+built from more than 150 original resources. If you use Python and don’t
+need to build the database yourself, try our <a class="reference external" href="https://github.com/saezlab/omnipath">Python client</a>. Read more
+about the <a class="reference external" href="https://pypath.omnipathdb.org/webservice.html">web service here</a>.</p>
+</section>
+<section id="do-you-need-pypath">
+<h2>Do you need pypath?<a class="headerlink" href="#do-you-need-pypath" title="Link to this heading">§</a></h2>
+<p>Pypath is the database builder of OmniPath. For most people the data
+distributed in OmniPath is satisfying (see above), they don’t really need
+pypath. Typically you need pypath to:</p>
+<ul class="simple">
+<li><p>Build a custom or very fresh version of the OmniPath database(s)</p></li>
+<li><p>Use one of the utilities such as ID translation, homology translation, etc.
+(see the <a class="reference external" href="https://github.com/saezlab/pypath/tree/master/pypath/utils">utils module</a>)</p></li>
+<li><p>Access the raw or preprocessed data directly from the original resources
+(see the <a class="reference external" href="https://github.com/saezlab/pypath/tree/master/pypath/inputs">inputs module</a>)</p></li>
+</ul>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">§</a></h2>
+<p><strong>From PyPI:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>pypath-omnipath
+</pre></div>
+</div>
+<p><strong>From Git:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/saezlab/pypath.git
+</pre></div>
+</div>
+</section>
+<section id="docs">
+<h2>Docs<a class="headerlink" href="#docs" title="Link to this heading">§</a></h2>
+<p>Read the <a class="reference external" href="https://pypath.omnipathdb.org/">reference documentation</a> or check out the <a class="reference external" href="https://workflows.omnipathdb.org/">tutorials</a>. The most
+comprehensive guide to <em>pypath</em> is <a class="reference external" href="https://pypath.omnipathdb.org/notebooks/manual.html">The Pypath Book</a>.</p>
+</section>
+<section id="get-help">
+<h2>Get help<a class="headerlink" href="#get-help" title="Link to this heading">§</a></h2>
+<p>Should you have a question or experiencing an issue, please write us by
+the <a class="reference external" href="https://github.com/saezlab/pypath/issues">Github issues</a> page.</p>
+</section>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Link to this heading">§</a></h2>
+<p><strong>pypath</strong> is a Python module for processing molecular biology data resources,
+combining them into databases and providing a versatile interface in Python
+as well as exporting the data for access through other platforms such as
+<a class="reference external" href="https://r.omnipathdb.org/">R</a>, <a class="reference external" href="https://omnipathdb.org/">web service</a>, <a class="reference external" href="https://apps.cytoscape.org/apps/omnipath">Cytoscape</a> and BEL (Biological Expression Language).</p>
+<p><strong>pypath</strong> provides access to more than 100 resources! It builds 5 major
+combined databases and within these we can distinguish different datasets.
+The 5 major databases are interactions (molecular interaction network or
+pathways), enzyme-substrate relationships, protein complexes, molecular
+annotations (functional roles, localizations, and more) and inter-cellular
+communication roles.</p>
+<p><strong>pypath</strong> consists of a number of submodules and each of them again contains
+a number of submodules. Overall <strong>pypath</strong> consists of around 100 modules.
+The most important higher level submodules:</p>
+<ul class="simple">
+<li><p><em>pypath.core:</em> contains the database classes e.g. network, complex,
+annotations, etc</p></li>
+<li><p><em>pypath.inputs:</em> contains the resource specific methods which directly
+downlad and preprocess data from the original sources</p></li>
+<li><p><em>pypath.omnipath:</em> higher level applications, e.g. a database manager, a
+web server</p></li>
+<li><p><em>pypath.utils:</em> stand alone useful utilities, e.g. identifier translator,
+Gene Ontology processor, BioPax processor, etc</p></li>
+</ul>
+<section id="integrated-databases">
+<h3>Integrated databases<a class="headerlink" href="#integrated-databases" title="Link to this heading">§</a></h3>
+<p>In the beginning the primary aim of <code class="docutils literal notranslate"><span class="pre">pypath</span></code> was to build networks from
+multiple sources using an igraph object as the fundament of the integrated
+data structure. From version 0.7 and 0.8 this design principle started to
+change. Today <code class="docutils literal notranslate"><span class="pre">pypath</span></code> builds a number of different databases, exposes them
+by a rich API and each of them can be converted to <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>.
+The modules and classes responsible for the integrated databases are located
+in <code class="docutils literal notranslate"><span class="pre">pypath.core</span></code>. The five main databases are the followings:</p>
+<ul class="simple">
+<li><p><em>network</em> - <code class="docutils literal notranslate"><span class="pre">core.network</span></code></p></li>
+<li><p><em>enzyme-substrate</em> - <code class="docutils literal notranslate"><span class="pre">core.enz_sub</span></code></p></li>
+<li><p><em>complexes</em> - <code class="docutils literal notranslate"><span class="pre">core.complex</span></code></p></li>
+<li><p><em>annotations</em> - <code class="docutils literal notranslate"><span class="pre">core.annot</span></code></p></li>
+<li><p><em>intercell</em> - <code class="docutils literal notranslate"><span class="pre">core.intercell</span></code></p></li>
+</ul>
+<p>Some of the databases have different variants (e.g. PPI and transcriptional
+network) and all can be customized by many parameters.</p>
+</section>
+<section id="database-management">
+<h3>Database management<a class="headerlink" href="#database-management" title="Link to this heading">§</a></h3>
+<p>The databases above can be loaded by calling the appropriate classes.
+However building the databases require time and memory so we want to avoid
+building them more often than necessary or keeping more than one copies
+in the memory. Some of the modules listed above have a method <code class="docutils literal notranslate"><span class="pre">get_db</span></code>
+which ensures only one instance of the database is loaded. But there is a
+more full featured database management system available in <strong>pypath</strong>,
+this is the <strong>pypath.omnipath</strong> module. This module is able to build the
+databases, automatically saves them to <code class="docutils literal notranslate"><span class="pre">pickle</span></code> files and loads them from
+there in subsequent sessions. <strong>pypath</strong> comes with a number of database
+definitions and users can add more. The <code class="docutils literal notranslate"><span class="pre">pickle</span></code> files are located by
+default in the <code class="docutils literal notranslate"><span class="pre">~/.pypath/pickles/</span></code> directory. With the <code class="docutils literal notranslate"><span class="pre">omnipath</span></code>
+module it’s easy to get an instance of a database. For example to get the
+<cite>omnipath</cite> PPI network dataset:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypath</span> <span class="kn">import</span> <span class="n">omnipath</span>
+<span class="n">op</span> <span class="o">=</span> <span class="n">omnipath</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">get_db</span><span class="p">(</span><span class="s1">&#39;omnipath&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Important:</strong> Building the databases for the first time requires the
+download of several MB or GB of data from the original resources. This
+normally takes long time and is prone of errors (e.g. truncated or empty
+downloads due to interrupted HTTP connection). In this case you should check
+the log to find the path of the problematic cache file, check the contents
+of this file to find out the reason and possibly delete the file to ensure
+another download attempt when you call the database build again. Sometimes
+the original resources change their content or go offline. If you encounter
+such case please open an issue at <a class="github reference external" href="https://github.com/saezlab/pypath/issues">saezlab/pypath#issues</a>
+so we can fix it in <code class="docutils literal notranslate"><span class="pre">pypath</span></code>. Once all the necessary contents are
+downloaded and stored in the cache, the database builds are much faster,
+but still can take minutes.</p>
+</section>
+<section id="further-modules-in-pypath">
+<h3>Further modules in pypath<a class="headerlink" href="#further-modules-in-pypath" title="Link to this heading">§</a></h3>
+<p>Apart from the databases, <strong>pypath</strong> has many submodules with standalone
+functionality which can be used in other modules and scripts. Below we
+present a few of these.</p>
+</section>
+<section id="id-conversion">
+<h3>ID conversion<a class="headerlink" href="#id-conversion" title="Link to this heading">§</a></h3>
+<p>The ID conversion module <code class="docutils literal notranslate"><span class="pre">utils.mapping</span></code> translates between a large variety
+of gene, protein, miRNA and small molecule ID types. It has the feature to
+translate secondary UniProt ACs to primaries, and Trembl ACs to SwissProt,
+using primary Gene Symbols to find the connections. This module automatically
+loads and stores the necessary conversion tables. Many tables
+are predefined, such as all the IDs in <strong>UniProt mapping service,</strong> while
+users are able to load any table from <strong>file</strong> using the classes provided
+in the module <code class="docutils literal notranslate"><span class="pre">input_formats</span></code>. An example how to translate identifiers:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypath.utils</span> <span class="kn">import</span> <span class="n">mapping</span>
+<span class="n">mapping</span><span class="o">.</span><span class="n">map_name</span><span class="p">(</span><span class="s1">&#39;P00533&#39;</span><span class="p">,</span> <span class="s1">&#39;uniprot&#39;</span><span class="p">,</span> <span class="s1">&#39;genesymbol&#39;</span><span class="p">)</span>
+<span class="c1"># {&#39;EGFR&#39;}</span>
+</pre></div>
+</div>
+</section>
+<section id="homology-translation">
+<h3>Homology translation<a class="headerlink" href="#homology-translation" title="Link to this heading">§</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">pypath.utils.homology</span></code> module is able to find the orthologs of genes
+between two organisms. It uses data both from NCBI HomoloGene, Ensembl and
+UniProt. This module is really simple to use:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypath.utils</span> <span class="kn">import</span> <span class="n">homology</span>
+<span class="n">homology</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s1">&#39;P00533&#39;</span><span class="p">,</span> <span class="mi">10090</span><span class="p">)</span> <span class="c1"># translating the human EGFR to mouse</span>
+<span class="c1"># [&#39;Q01279&#39;] # it returns the mouse Egfr UniProt AC</span>
+</pre></div>
+</div>
+<p>It is able to handle any ID type supported by <code class="docutils literal notranslate"><span class="pre">pypath.utils.mapping</span></code>.
+Alternatively, you can access a complete dictionary of orthologous genes,
+or translate columns in a pandas data frame.</p>
+</section>
+</section>
+<section id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Link to this heading">§</a></h2>
+<p><strong>Does it run on my old Python?</strong></p>
+<p>Most likely it doesn’t. The oldest supported version, currently 3.9, is
+defined in our <a class="reference external" href="https://github.com/saezlab/pypath/blob/master/pyproject.toml">pyproject.toml</a>.</p>
+<p><strong>Is there something similar in R?</strong></p>
+<p><a class="reference external" href="https://r.omnipathdb.org">OmniPath’s R client</a>, besides accessing data from OmniPath, provides many
+similar services as pypath: <a class="reference external" href="https://r.omnipathdb.org/reference/translate_ids.html">ID translation</a>, <a class="reference external" href="https://r.omnipathdb.org/reference/homologene_uniprot_orthology.html">homology translation</a>,
+<a class="reference external" href="https://r.omnipathdb.org/reference/ncbi_taxid.html">taxonomy support</a>, <a class="reference external" href="https://r.omnipathdb.org/reference/go_annot_download.html">GO support</a>, and many more.</p>
+<p><a class="reference external" href="https://omnipathdb.org/#faq">Questions about OmniPath</a></p>
+</section>
+<section id="contact">
+<h2>Contact<a class="headerlink" href="#contact" title="Link to this heading">§</a></h2>
+<p>We prefer to keep all communication within the <a class="reference external" href="https://github.com/saezlab/pypath/issues">Github issues</a>. About private
+or sensitive matters feel free to contact us by <a class="reference external" href="mailto:omnipathdb&#37;&#52;&#48;gmail&#46;com">omnipathdb<span>&#64;</span>gmail<span>&#46;</span>com</a>.</p>
+</section>
+<section id="impressum">
+<h2>Impressum<a class="headerlink" href="#impressum" title="Link to this heading">§</a></h2>
+<p>The development of <code class="docutils literal notranslate"><span class="pre">pypath</span></code> is coordinated by <a class="reference external" href="https://denes.omnipathdb.org/">Dénes Türei</a> in the
+<a class="reference external" href="https://saezlab.org/">Saez Lab</a>, with the contribution of developers and scientists from
+other groups:</p>
+<ul class="simple">
+<li><p>Erva Ulusoy, Melih Darcan, Ömer Kaan Vural, Tennur Kılıç, Elif Çevrim,
+Bünyamin Şen, Atabey Ünlü and Mert Ergün in the
+<a class="reference external" href="https://yunus.hacettepe.edu.tr/~tuncadogan/">HU Biological Data Science Lab (PI: Tunca Doğan)</a> created many new input
+modules in <cite>pypath</cite>;</p></li>
+<li><p>Leila Gul, Dezső Módos, Márton Ölbei and Tamás Korcsmáros in the
+<a class="reference external" href="https://korcsmaroslab.org/">Korcsmaros Lab</a> contributed to the overall design of OmniPath, the
+design and implementation of the intercellular communication database,
+and with various case studies and tutorials;</p></li>
+<li><p>Michael Klein from the group of <a class="reference external" href="https://www.helmholtz-munich.de/en/icb/research-groups/theis-lab/">Fabian Theis</a> developed the
+<a class="reference external" href="https://github.com/saezlab/omnipath">Python client</a> for the OmniPath web service;</p></li>
+<li><p>Charles Tapley Hoyt and Daniel Domingo-Fernández added the BEL export
+module.</p></li>
+<li><p>From the <a class="reference external" href="https://saezlab.org/">Saez Lab</a>, Olga Ivanova introduced the resource manager in
+<cite>pypath</cite>, Sophia Müller-Dott added the CollecTRI gene regulatory network,
+while Nicolàs Palacio, Sebastian Lobentanzer and Ahmet Rifaioglu
+have done various maintenance and refactoring works. Aurelien Dugourd and
+Christina Schmidt helped with the design of the metabolomics related
+datasets and services.</p></li>
+<li><p>The <a class="reference external" href="https://r.omnipathdb.org">R package</a> and the <a class="reference external" href="https://apps.cytoscape.org/apps/omnipath">Cytoscape app</a> are developed and maintained by
+Francesco Ceccarelli, Attila Gábor, Alberto Valdeolivas, Dénes Türei and
+Nicolàs Palacio;</p></li>
+<li><p>The first logo of OmniPath has been designed by Jakob Wirbel (Saez Lab),
+the current logo by Dénes Türei, while the cover graphics for Nature Methods
+is the work of Spencer Phillips from EMBL-EBI.</p></li>
+</ul>
+</section>
+<section id="history-and-releases">
+<h2>History and releases<a class="headerlink" href="#history-and-releases" title="Link to this heading">§</a></h2>
+<p>See <a class="reference external" href="https://pypath.omnipathdb.org/releasehistory.html">here</a> a bird eye view of pypath’s development history. For more details
+about recent developments see the <a class="reference external" href="https://github.com/saezlab/pypath/releases">Github releases</a>.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="contents.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Contents</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="webservice.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Webservice</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="current visible nav section-nav flex-column">
+<li class="toctree-l1 current toc-h1 nav-item toc-entry"><a class="current reference internal nav-link" href="#">Welcome to pypath!</a><ul class="visible nav section-nav flex-column">
+<li class="toctree-l2 toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#omnipath">OmniPath</a></li>
+<li class="toctree-l2 toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#do-you-need-pypath">Do you need pypath?</a></li>
+<li class="toctree-l2 toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toctree-l2 toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docs">Docs</a></li>
+<li class="toctree-l2 toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-help">Get help</a></li>
+<li class="toctree-l2 toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#features">Features</a><ul class="visible nav section-nav flex-column">
+<li class="toctree-l3 toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integrated-databases">Integrated databases</a></li>
+<li class="toctree-l3 toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#database-management">Database management</a></li>
+<li class="toctree-l3 toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#further-modules-in-pypath">Further modules in pypath</a></li>
+<li class="toctree-l3 toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id-conversion">ID conversion</a></li>
+<li class="toctree-l3 toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#homology-translation">Homology translation</a></li>
+</ul>
+</li>
+<li class="toctree-l2 toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#faq">FAQ</a></li>
+<li class="toctree-l2 toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contact">Contact</a></li>
+<li class="toctree-l2 toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#impressum">Impressum</a></li>
+<li class="toctree-l2 toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#history-and-releases">History and releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1 toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="webservice.html">Webservice</a></li>
+<li class="toctree-l1 toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="releasehistory.html">Release history</a></li>
+<li class="toctree-l1 toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="reference.html">Reference</a></li>
+<li class="toctree-l1 toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="notebooks/manual.html">The pypath book</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Denes Turei &lt;turei.denes@gmail.com&gt;, Nicolàs Palacio, Sebastian Lobentanzer, Olga Ivanova, Melih Darcan, Erva Ulusoy, Tennur Kilic, Omer Kaan Vural, Ahmet Rifaioglu, Charles Tapley Hoyt.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.2.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

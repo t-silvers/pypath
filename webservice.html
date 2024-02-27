@@ -1,0 +1,848 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Webservice &#8212; pypath 0.16.9 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=77553476" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/css/pypathdocs.css?v=b64fc3cb" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=fa0329c2"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'webservice';</script>
+    <link rel="icon" href="_static/omnipath-logo.svg"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Release history" href="releasehistory.html" />
+    <link rel="prev" title="Welcome to pypath!" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="contents.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/omnipath-logo.svg" class="logo__image only-light" alt="Pypath"/>
+    <script>document.write(`<img src="_static/omnipath-logo.svg" class="logo__image only-dark" alt="Pypath"/>`);</script>
+  
+  
+    <p class="title logo__title">Pypath</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="index.html">
+                        Welcome to pypath!
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Webservice
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="releasehistory.html">
+                        Release history
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="reference.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="notebooks/manual.html">
+                        The pypath book
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/saezlab/pypath" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/omnipathdb" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pypath-omnipath" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-box fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://omnipathdb.org/" title="OmniPath" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-university fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">OmniPath</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://saezlab.org/" title="Saez Lab" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-users fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Saez Lab</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="index.html">
+                        Welcome to pypath!
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Webservice
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="releasehistory.html">
+                        Release history
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="reference.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="notebooks/manual.html">
+                        The pypath book
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/saezlab/pypath" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/omnipathdb" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pypath-omnipath" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-box fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://omnipathdb.org/" title="OmniPath" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-university fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">OmniPath</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://saezlab.org/" title="Saez Lab" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-users fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Saez Lab</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="contents.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Webservice</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="webservice">
+<h1>Webservice<a class="headerlink" href="#webservice" title="Link to this heading">§</a></h1>
+<p>The webservice implements a very simple REST style API, you can make requests
+by the HTTP protocol (browser, wget, curl or whatever). After defining the
+query type and optionally a set of molecular entities (proteins) you can
+add further GET parameters encoded in the URL.</p>
+<section id="query-types">
+<h2>Query types<a class="headerlink" href="#query-types" title="Link to this heading">§</a></h2>
+<p>The webservice currently recognizes 7 types of queries: <code class="docutils literal notranslate"><span class="pre">interactions</span></code>,
+<code class="docutils literal notranslate"><span class="pre">enz_sub</span></code>, <code class="docutils literal notranslate"><span class="pre">annotations</span></code>, <code class="docutils literal notranslate"><span class="pre">complexes</span></code>, <code class="docutils literal notranslate"><span class="pre">intercell</span></code>, <code class="docutils literal notranslate"><span class="pre">queries</span></code> and
+<code class="docutils literal notranslate"><span class="pre">info</span></code>.
+The query types <code class="docutils literal notranslate"><span class="pre">resources</span></code>, <code class="docutils literal notranslate"><span class="pre">network</span></code> and <code class="docutils literal notranslate"><span class="pre">about</span></code> have not been
+implemented yet in the new webservice.</p>
+</section>
+<section id="interaction-datasets">
+<h2>Interaction datasets<a class="headerlink" href="#interaction-datasets" title="Link to this heading">§</a></h2>
+<p>The instance of the <code class="docutils literal notranslate"><span class="pre">pypath</span></code> webserver running at the domain
+<a class="reference external" href="https://omnipathdb.org/">https://omnipathdb.org/</a>, serves not only the OmniPath data but also other
+datasets. Each of them has a short name what you can use in the queries
+(e.g. <code class="docutils literal notranslate"><span class="pre">&amp;datasets=omnipath,pathwayextra</span></code>).</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">omnipath</span></code>: the OmniPath data as defined in the paper, an arbitrary
+optimum between coverage and quality</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pathwayextra</span></code>: activity flow interactions without literature reference</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kinaseextra</span></code>: enzyme-substrate interactions without literature reference</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ligrecextra</span></code>: ligand-receptor interactions without literature reference</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dorothea</span></code>: transcription factor (TF)-target interactions from DoRothEA</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tf_target</span></code>: transcription factor (TF)-target interactions from other
+sources</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mirnatarget</span></code>: miRNA-mRNA and TF-miRNA interactions</p></li>
+</ul>
+<p>TF-target interactions from DoRothEA, a large collection additional
+enzyme-substrate interactions, and literature curated miRNA-mRNA interacions
+combined from 4 databases.</p>
+</section>
+<section id="mouse-and-rat">
+<h2>Mouse and rat<a class="headerlink" href="#mouse-and-rat" title="Link to this heading">§</a></h2>
+<p>Except the miRNA interactions all interactions are available for human, mouse
+and rat. The rodent data has been translated from human using the NCBI
+Homologene database. Many human proteins do not have known homolog in rodents
+hence rodent datasets are smaller than their human counterparts. Note, if you
+work with mouse omics data you might do better to translate your dataset to
+human (for example using the <code class="docutils literal notranslate"><span class="pre">pypath.homology</span></code> module) and use human
+interaction data.</p>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">§</a></h2>
+<p>A request without any parameter provides the main webpage:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org">https://omnipathdb.org</a></p>
+</div></blockquote>
+<p>The <code class="docutils literal notranslate"><span class="pre">info</span></code> returns a HTML page with comprehensive information about the
+resources. The list here should be and will be updated as currently OmniPath
+includes much more databases:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/info">https://omnipathdb.org/info</a></p>
+</div></blockquote>
+<section id="molecular-interaction-network">
+<h3>Molecular interaction network<a class="headerlink" href="#molecular-interaction-network" title="Link to this heading">§</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">interactions</span></code> query accepts some parameters and returns interactions in
+tabular format. This example returns all interactions of EGFR (P00533), with
+sources and references listed.</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/interactions/?partners=P00533&amp;fields=sources,references">https://omnipathdb.org/interactions/?partners=P00533&amp;fields=sources,references</a></p>
+</div></blockquote>
+<p>By default only the OmniPath dataset used, to include any other dataset you
+have to set additional parameters. For example to query the transcriptional regulators of EGFR:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/interactions/?targets=EGFR&amp;types=transcriptional">https://omnipathdb.org/interactions/?targets=EGFR&amp;types=transcriptional</a></p>
+</div></blockquote>
+<p>The DoRothEA database assigns confidence levels to the interactions. You
+might want to select only the highest confidence, <em>A</em> category:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/interactions/?targets=EGFR&amp;types=transcriptional&amp;dorothea_levels=A">https://omnipathdb.org/interactions/?targets=EGFR&amp;types=transcriptional&amp;dorothea_levels=A</a></p>
+</div></blockquote>
+<p>Show the transcriptional targets of Smad2 homology translated to rat including
+the confidence levels from TF Regulons:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/interactions/?genesymbols=1&amp;fields=type,ncbi_tax_id,dorothea_level&amp;organisms=10116&amp;sources=Smad2&amp;types=transcriptional">https://omnipathdb.org/interactions/?genesymbols=1&amp;fields=type,ncbi_tax_id,dorothea_level&amp;organisms=10116&amp;sources=Smad2&amp;types=transcriptional</a></p>
+</div></blockquote>
+<p>Query interactions from PhosphoNetworks which is part of the <em>kinaseextra</em>
+dataset:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/interactions/?genesymbols=1&amp;fields=sources&amp;databases=PhosphoNetworks&amp;datasets=kinaseextra">https://omnipathdb.org/interactions/?genesymbols=1&amp;fields=sources&amp;databases=PhosphoNetworks&amp;datasets=kinaseextra</a></p>
+</div></blockquote>
+<p>Get the interactions from Signor, SPIKE and SignaLink3:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/interactions/?genesymbols=1&amp;fields=sources,references&amp;databases=Signor,SPIKE,SignaLink3">https://omnipathdb.org/interactions/?genesymbols=1&amp;fields=sources,references&amp;databases=Signor,SPIKE,SignaLink3</a></p>
+</div></blockquote>
+<p>All interactions of MAP1LC3B:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/interactions/?genesymbols=1&amp;partners=MAP1LC3B">https://omnipathdb.org/interactions/?genesymbols=1&amp;partners=MAP1LC3B</a></p>
+</div></blockquote>
+<p>By default <code class="docutils literal notranslate"><span class="pre">partners</span></code> queries the interaction where either the source or the
+arget is among the partners. If you set the <code class="docutils literal notranslate"><span class="pre">source_target</span></code> parameter to
+<code class="docutils literal notranslate"><span class="pre">AND</span></code> both the source and the target must be in the queried set:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/interactions/?genesymbols=1&amp;fields=sources,references&amp;sources=ATG3,ATG7,ATG4B,SQSTM1&amp;targets=MAP1LC3B,MAP1LC3A,MAP1LC3C,Q9H0R8,GABARAP,GABARAPL2&amp;source_target=AND">https://omnipathdb.org/interactions/?genesymbols=1&amp;fields=sources,references&amp;sources=ATG3,ATG7,ATG4B,SQSTM1&amp;targets=MAP1LC3B,MAP1LC3A,MAP1LC3C,Q9H0R8,GABARAP,GABARAPL2&amp;source_target=AND</a></p>
+</div></blockquote>
+<p>As you see above you can use UniProt IDs and Gene Symbols in the queries and
+also mix them. Get the miRNA regulating NOTCH1:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/interactions/?genesymbols=1&amp;fields=sources,references&amp;datasets=mirnatarget&amp;targets=NOTCH1">https://omnipathdb.org/interactions/?genesymbols=1&amp;fields=sources,references&amp;datasets=mirnatarget&amp;targets=NOTCH1</a></p>
+</div></blockquote>
+<p>Note: with the exception of mandatory fields and genesymbols, the columns
+appear exactly in the order you provided in your query.</p>
+</section>
+<section id="enzyme-substrate-interactions">
+<h3>Enzyme-substrate interactions<a class="headerlink" href="#enzyme-substrate-interactions" title="Link to this heading">§</a></h3>
+<p>Another query type available is <code class="docutils literal notranslate"><span class="pre">ptms</span></code> which provides enzyme-substrate
+interactions. It is very similar to the <code class="docutils literal notranslate"><span class="pre">interactions</span></code>:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/enz_sub?genesymbols=1&amp;fields=sources,references,isoforms&amp;enzymes=FYN">https://omnipathdb.org/enz_sub?genesymbols=1&amp;fields=sources,references,isoforms&amp;enzymes=FYN</a></p>
+</div></blockquote>
+<p>Is there any ubiquitination reaction?</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/ens_sub?genesymbols=1&amp;fields=sources,references&amp;types=ubiquitination">https://omnipathdb.org/ens_sub?genesymbols=1&amp;fields=sources,references&amp;types=ubiquitination</a></p>
+</div></blockquote>
+<p>And acetylation in mouse?</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/ptms?genesymbols=1&amp;fields=sources,references&amp;types=acetylation&amp;organisms=10090">https://omnipathdb.org/ptms?genesymbols=1&amp;fields=sources,references&amp;types=acetylation&amp;organisms=10090</a></p>
+</div></blockquote>
+<p>Rat interactions, both directly from rat and homology translated from human,
+from the PhosphoSite database:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/enz_sub?genesymbols=1&amp;fields=sources,references&amp;organisms=10116&amp;databases=PhosphoSite,PhosphoSite_noref">https://omnipathdb.org/enz_sub?genesymbols=1&amp;fields=sources,references&amp;organisms=10116&amp;databases=PhosphoSite,PhosphoSite_noref</a></p>
+</div></blockquote>
+</section>
+<section id="molecular-complexes">
+<h3>Molecular complexes<a class="headerlink" href="#molecular-complexes" title="Link to this heading">§</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">complexes</span></code> query provides a comprehensive database of more than 22,000
+protein complexes. For example, to query all complexes from CORUM and PDB
+containing MTOR (P42345):</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/complexes?proteins=P42345&amp;databases=CORUM,PDB">https://omnipathdb.org/complexes?proteins=P42345&amp;databases=CORUM,PDB</a></p>
+</div></blockquote>
+</section>
+<section id="annotations">
+<h3>Annotations<a class="headerlink" href="#annotations" title="Link to this heading">§</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">annotations</span></code> query provides a large variety of data about proteins,
+complexes and in the future other kinds of molecules. For example an
+annotation can tell if a protein is a kinase, or if it is expressed in the
+hearth muscle. These data come from dozens of databases and each kind of
+annotation record contains different fields. Because of this here we have
+a <code class="docutils literal notranslate"><span class="pre">record_id</span></code> field which is unique within the records of each database.
+Each row contains one key value pair and you need to use the <code class="docutils literal notranslate"><span class="pre">record_id</span></code>
+to connect the related key-value pairs. You can easily do this with <code class="docutils literal notranslate"><span class="pre">tidyr</span></code>
+and <code class="docutils literal notranslate"><span class="pre">dplyr</span></code> in R or <code class="docutils literal notranslate"><span class="pre">pandas</span></code> in Python. An example to query the pathway
+annotations from SignaLink:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/annotations?databases=SignaLink_pathway">https://omnipathdb.org/annotations?databases=SignaLink_pathway</a></p>
+</div></blockquote>
+<p>Or the tissue expression of BMP7 from Human Protein Atlas:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/annotations?databases=HPA_tissue&amp;proteins=BMP7">https://omnipathdb.org/annotations?databases=HPA_tissue&amp;proteins=BMP7</a></p>
+</div></blockquote>
+</section>
+<section id="roles-in-inter-cellular-communication">
+<h3>Roles in inter-cellular communication<a class="headerlink" href="#roles-in-inter-cellular-communication" title="Link to this heading">§</a></h3>
+<p>Another query type is the <code class="docutils literal notranslate"><span class="pre">intercell</span></code>, providing information about the
+roles in inter-cellular signaling. E.g. if a protein is a ligand, a receptor,
+an extracellular matrix (ECM) component, etc. The proteins and protein
+complexes are classified into categories. The categories are defined by a
+number of attributes:</p>
+<ul class="simple">
+<li><p><cite>aspect</cite>: funtional (e.g. ion channel) or locational (e.g. plasma
+membrane transmembrane).</p></li>
+<li><p><cite>scope</cite>: generic (e.g. ligand) or specific (e.g. interleukin)</p></li>
+<li><p><cite>source</cite>: resource specific (from one resource) or composite (combined
+from more resources)</p></li>
+<li><p><cite>causality</cite>: transmitter (delivering signal from the expressing cell)
+or receiver (receiving signal into the expressing cell) or both</p></li>
+<li><p><cite>topology</cite>: major localization categories derived from the locational
+categories: plasma membrane transmembrane or peripheral or secreted</p></li>
+</ul>
+<p>The <cite>intercell</cite> database defines 25 functional and 10 locational generic,
+composite categories. The number of specific categories is above 1,000.</p>
+<p>You can use all these attributes in your queries, see the exact keys and
+values at <a class="reference external" href="https://omnipathdb.org/queries/intercell">https://omnipathdb.org/queries/intercell</a></p>
+<p>Some example queries:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/intercell?proteins=EGFR,ULK1,ATG4A,BMP8B">https://omnipathdb.org/intercell?proteins=EGFR,ULK1,ATG4A,BMP8B</a></p>
+</div></blockquote>
+<p>All the resource specific functional classes for one protein:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/intercell?source=resource_specific&amp;aspect=functional&amp;proteins=P00533">https://omnipathdb.org/intercell?source=resource_specific&amp;aspect=functional&amp;proteins=P00533</a></p>
+</div></blockquote>
+<p>A list of all ECM proteins:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/intercell?categories=ecm">https://omnipathdb.org/intercell?categories=ecm</a></p>
+</div></blockquote>
+</section>
+<section id="exploring-possible-parameters">
+<h3>Exploring possible parameters<a class="headerlink" href="#exploring-possible-parameters" title="Link to this heading">§</a></h3>
+<p>Sometimes the names and values of the query parameters are not intuitive,
+even though in many cases the server accepts multiple alternatives. To see
+the possible parameters with all possible values you can use the <code class="docutils literal notranslate"><span class="pre">queries</span></code>
+query type. The server checks the parameter names and values exactly against
+these rules and if any of them don’t match you will get an error message
+instead of reply. To see the parameters for the <code class="docutils literal notranslate"><span class="pre">interactions</span></code> query:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://omnipathdb.org/queries/interactions">https://omnipathdb.org/queries/interactions</a></p>
+</div></blockquote>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Welcome to pypath!</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="releasehistory.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Release history</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="current visible nav section-nav flex-column">
+<li class="toctree-l1 toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="index.html">Welcome to pypath!</a></li>
+<li class="toctree-l1 current toc-h1 nav-item toc-entry"><a class="current reference internal nav-link" href="#">Webservice</a><ul class="visible nav section-nav flex-column">
+<li class="toctree-l2 toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#query-types">Query types</a></li>
+<li class="toctree-l2 toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-datasets">Interaction datasets</a></li>
+<li class="toctree-l2 toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mouse-and-rat">Mouse and rat</a></li>
+<li class="toctree-l2 toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a><ul class="visible nav section-nav flex-column">
+<li class="toctree-l3 toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#molecular-interaction-network">Molecular interaction network</a></li>
+<li class="toctree-l3 toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enzyme-substrate-interactions">Enzyme-substrate interactions</a></li>
+<li class="toctree-l3 toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#molecular-complexes">Molecular complexes</a></li>
+<li class="toctree-l3 toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#annotations">Annotations</a></li>
+<li class="toctree-l3 toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#roles-in-inter-cellular-communication">Roles in inter-cellular communication</a></li>
+<li class="toctree-l3 toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-possible-parameters">Exploring possible parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="releasehistory.html">Release history</a></li>
+<li class="toctree-l1 toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="reference.html">Reference</a></li>
+<li class="toctree-l1 toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="notebooks/manual.html">The pypath book</a></li>
+</ul>
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/webservice.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Denes Turei &lt;turei.denes@gmail.com&gt;, Nicolàs Palacio, Sebastian Lobentanzer, Olga Ivanova, Melih Darcan, Erva Ulusoy, Tennur Kilic, Omer Kaan Vural, Ahmet Rifaioglu, Charles Tapley Hoyt.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.2.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

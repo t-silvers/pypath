@@ -1,0 +1,15 @@
+thead tr th:first-child,
+tbody tr td:first-child {
+    width: 50%;
+    min-width: 30%;
+    max-width: 70%;
+    word-break: break-all;
+}
+
+.toc-item {
+    border-left-width: 0px!important;
+}
+
+.skip-link {
+    display: none;
+}

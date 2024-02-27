@@ -1,0 +1,1653 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pypath.internals.input_formats &#8212; pypath 0.16.9 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=77553476" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/pypathdocs.css?v=b64fc3cb" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../_static/documentation_options.js?v=fa0329c2"></script>
+    <script src="../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pypath/internals/input_formats';</script>
+    <link rel="icon" href="../../../_static/omnipath-logo.svg"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class=" navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../contents.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/omnipath-logo.svg" class="logo__image only-light" alt="Pypath"/>
+    <script>document.write(`<img src="../../../_static/omnipath-logo.svg" class="logo__image only-dark" alt="Pypath"/>`);</script>
+  
+  
+    <p class="title logo__title">Pypath</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../index.html">
+                        Welcome to pypath!
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../webservice.html">
+                        Webservice
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../releasehistory.html">
+                        Release history
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../notebooks/manual.html">
+                        The pypath book
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/saezlab/pypath" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/omnipathdb" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pypath-omnipath" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-box fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://omnipathdb.org/" title="OmniPath" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-university fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">OmniPath</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://saezlab.org/" title="Saez Lab" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-users fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Saez Lab</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../index.html">
+                        Welcome to pypath!
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../webservice.html">
+                        Webservice
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../releasehistory.html">
+                        Release history
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../reference.html">
+                        Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../notebooks/manual.html">
+                        The pypath book
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/saezlab/pypath" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/omnipathdb" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-twitter fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/pypath-omnipath" title="PyPI" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-box fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://omnipathdb.org/" title="OmniPath" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-university fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">OmniPath</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://saezlab.org/" title="Saez Lab" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-solid fa-users fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Saez Lab</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../contents.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../../pypath.html" class="nav-link">pypath</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">pypath.inter...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pypath.internals.input_formats</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="c1">#</span>
+<span class="c1">#  This file is part of the `pypath` python module</span>
+<span class="c1">#</span>
+<span class="c1">#  Copyright 2014-2023</span>
+<span class="c1">#  EMBL, EMBL-EBI, Uniklinik RWTH Aachen, Heidelberg University</span>
+<span class="c1">#</span>
+<span class="c1">#  Authors: see the file `README.rst`</span>
+<span class="c1">#  Contact: Dénes Türei (turei.denes@gmail.com)</span>
+<span class="c1">#</span>
+<span class="c1">#  Distributed under the GPLv3 License.</span>
+<span class="c1">#  See accompanying file LICENSE.txt or copy at</span>
+<span class="c1">#      https://www.gnu.org/licenses/gpl-3.0.html</span>
+<span class="c1">#</span>
+<span class="c1">#  Website: https://pypath.omnipathdb.org/</span>
+<span class="c1">#</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="kn">import</span> <span class="nn">pypath.share.settings</span> <span class="k">as</span> <span class="nn">settings</span>
+<span class="kn">import</span> <span class="nn">pypath.share.session</span> <span class="k">as</span> <span class="nn">session</span>
+<span class="kn">import</span> <span class="nn">pypath_common._constants</span> <span class="k">as</span> <span class="nn">_const</span>
+<span class="kn">import</span> <span class="nn">pypath.inputs.uniprot</span> <span class="k">as</span> <span class="nn">uniprot_input</span>
+<span class="kn">import</span> <span class="nn">pypath.inputs.unichem</span> <span class="k">as</span> <span class="nn">unichem_input</span>
+
+<span class="n">_logger</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">Logger</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;input_formats&#39;</span><span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;FileMapping&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;PickleMapping&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;NetworkInput&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ReadList&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;UniprotListMapping&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ProMapping&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ArrayMapping&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;BiomartMapping&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="n">AC_QUERY</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;genesymbol&#39;</span><span class="p">:</span> <span class="s1">&#39;gene_primary&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;genesymbol-syn&#39;</span><span class="p">:</span> <span class="s1">&#39;gene_synonym&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;hgnc&#39;</span><span class="p">:</span> <span class="s1">&#39;xref_hgnc&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;embl&#39;</span><span class="p">:</span> <span class="s1">&#39;xref_embl&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;entrez&#39;</span><span class="p">:</span> <span class="s1">&#39;xref_geneid&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;geneid&#39;</span><span class="p">:</span> <span class="s1">&#39;xref_geneid&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;refseqp&#39;</span><span class="p">:</span> <span class="s1">&#39;xref_refseq&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;enst&#39;</span><span class="p">:</span> <span class="s1">&#39;xref_ensembl&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;uniprot-entry&#39;</span><span class="p">:</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;protein-name&#39;</span><span class="p">:</span> <span class="s1">&#39;protein_name&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;gene-name&#39;</span><span class="p">:</span> <span class="s1">&#39;gene_names&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;gene-orf&#39;</span><span class="p">:</span> <span class="s1">&#39;gene_orf&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;gene-oln&#39;</span><span class="p">:</span> <span class="s1">&#39;gene_oln&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ec&#39;</span><span class="p">:</span> <span class="s1">&#39;ec&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">AC_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;uniprot&#39;</span><span class="p">:</span> <span class="s1">&#39;UniProtKB&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;uniprot-entry&#39;</span><span class="p">:</span> <span class="s1">&#39;UniProtKB&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;embl&#39;</span><span class="p">:</span> <span class="s1">&#39;EMBL-GeneBank-DDBJ&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;embl_id&#39;</span><span class="p">:</span> <span class="s1">&#39;EMBL-GeneBank-DDBJ_CDS&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pir&#39;</span><span class="p">:</span> <span class="s1">&#39;PIR&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;entrez&#39;</span><span class="p">:</span> <span class="s1">&#39;GeneID&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;gi&#39;</span><span class="p">:</span> <span class="s1">&#39;GI_number&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;refseqp&#39;</span><span class="p">:</span> <span class="s1">&#39;RefSeq_Protein&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;refseqn&#39;</span><span class="p">:</span> <span class="s1">&#39;RefSeq_Nucleotide&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ensembl&#39;</span><span class="p">:</span> <span class="s1">&#39;Ensembl&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ensp&#39;</span><span class="p">:</span> <span class="s1">&#39;Ensembl_Protein&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;enst&#39;</span><span class="p">:</span> <span class="s1">&#39;Ensembl_Transcript&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ensg&#39;</span><span class="p">:</span> <span class="s1">&#39;Ensembl&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ensgp&#39;</span><span class="p">:</span> <span class="s1">&#39;Ensembl_Genomes_Protein&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ensgt&#39;</span><span class="p">:</span> <span class="s1">&#39;Ensembl_Genomes_Transcript&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;hgnc&#39;</span><span class="p">:</span> <span class="s1">&#39;HGNC&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ensp_string&#39;</span><span class="p">:</span> <span class="s1">&#39;STRING&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;genesymbol&#39;</span><span class="p">:</span> <span class="s1">&#39;Gene_Name&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">BIOMART_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;hgnc_symbol&#39;</span><span class="p">:</span> <span class="s1">&#39;hgnc_symbol&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;rnacentral&#39;</span><span class="p">:</span> <span class="s1">&#39;rnacentral&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;hgnc_trans_name&#39;</span><span class="p">:</span> <span class="s1">&#39;hgnc_trans_name&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;wikigene_name&#39;</span><span class="p">:</span> <span class="s1">&#39;wikigene_name&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;gene_name&#39;</span><span class="p">:</span> <span class="s1">&#39;external_gene_name&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;genesymbol&#39;</span><span class="p">:</span> <span class="s1">&#39;external_gene_name&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;transcript_name&#39;</span><span class="p">:</span> <span class="s1">&#39;external_transcript_name&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;gene_description&#39;</span><span class="p">:</span> <span class="s1">&#39;description&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;gene_synonym&#39;</span><span class="p">:</span> <span class="s1">&#39;external_synonym&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;interpro_description&#39;</span><span class="p">:</span> <span class="s1">&#39;interpro_description&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;interpro&#39;</span><span class="p">:</span> <span class="s1">&#39;interpro&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;interpro_short_description&#39;</span><span class="p">:</span> <span class="s1">&#39;interpro_short_description&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;enst_biomart&#39;</span><span class="p">:</span> <span class="s1">&#39;ensembl_transcript_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ensg_biomart&#39;</span><span class="p">:</span> <span class="s1">&#39;ensembl_gene_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ensp_biomart&#39;</span><span class="p">:</span> <span class="s1">&#39;ensembl_peptide_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ensembl_gene_id&#39;</span><span class="p">:</span> <span class="s1">&#39;ensembl_gene_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ensembl_transcript_id&#39;</span><span class="p">:</span> <span class="s1">&#39;ensembl_transcript_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ensembl_peptide_id&#39;</span><span class="p">:</span> <span class="s1">&#39;ensembl_peptide_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;uniprot&#39;</span><span class="p">:</span> <span class="s1">&#39;uniprotswissprot&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;trembl&#39;</span><span class="p">:</span> <span class="s1">&#39;uniprotsptrembl&#39;</span><span class="p">,</span>
+
+<span class="p">}</span>
+
+<span class="n">PRO_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;alzforum&#39;</span><span class="p">:</span> <span class="s1">&#39;Alzforum_mut&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;araport&#39;</span><span class="p">:</span> <span class="s1">&#39;Araport&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;cgnc&#39;</span><span class="p">:</span> <span class="s1">&#39;CGNC&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;dictybase&#39;</span><span class="p">:</span> <span class="s1">&#39;dictyBase&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;dto&#39;</span><span class="p">:</span> <span class="s1">&#39;DTO&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ecocyc&#39;</span><span class="p">:</span> <span class="s1">&#39;EcoCyc&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ecogene&#39;</span><span class="p">:</span> <span class="s1">&#39;EcoGene&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ensembl_pro&#39;</span><span class="p">:</span> <span class="s1">&#39;Ensembl&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ensembl_bacteria&#39;</span><span class="p">:</span> <span class="s1">&#39;EnsemblBacteria&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;flybase&#39;</span><span class="p">:</span> <span class="s1">&#39;FlyBase&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;hgnc&#39;</span><span class="p">:</span> <span class="s1">&#39;HGNC&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;iuphar_fam&#39;</span><span class="p">:</span> <span class="s1">&#39;IUPHARfam&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;iuphar&#39;</span><span class="p">:</span> <span class="s1">&#39;IUPHARobj&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;mgi&#39;</span><span class="p">:</span> <span class="s1">&#39;MGI&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;mro&#39;</span><span class="p">:</span> <span class="s1">&#39;MRO&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ncbi_gene&#39;</span><span class="p">:</span> <span class="s1">&#39;NCBIGene&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pbd&#39;</span><span class="p">:</span> <span class="s1">&#39;PDB&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pombase&#39;</span><span class="p">:</span> <span class="s1">&#39;PomBase&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;interpro&#39;</span><span class="p">:</span> <span class="s1">&#39;PRO&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;reactome&#39;</span><span class="p">:</span> <span class="s1">&#39;Reactome&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;rgd&#39;</span><span class="p">:</span> <span class="s1">&#39;RGD&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sgd&#39;</span><span class="p">:</span> <span class="s1">&#39;SGD&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;tdr&#39;</span><span class="p">:</span> <span class="s1">&#39;TDR&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;uniprot&#39;</span><span class="p">:</span> <span class="s1">&#39;UniProtKB&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;uniprot-var&#39;</span><span class="p">:</span> <span class="s1">&#39;UniProtKB_VAR&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;wormbase&#39;</span><span class="p">:</span> <span class="s1">&#39;WormBase&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;zfin&#39;</span><span class="p">:</span> <span class="s1">&#39;ZFIN&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">ARRAY_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;affy&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;affymetrix&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;illumina&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;agilent&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;codelink&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;phalanx&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">RAMP_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;cas&#39;</span><span class="p">:</span> <span class="s1">&#39;CAS&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;cas_id&#39;</span><span class="p">:</span> <span class="s1">&#39;CAS&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;lipidmaps&#39;</span><span class="p">:</span> <span class="s1">&#39;LIPIDMAPS&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;en&#39;</span><span class="p">:</span> <span class="s1">&#39;EN&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;enzymatic_nomenclature&#39;</span><span class="p">:</span> <span class="s1">&#39;EN&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;genesymbol&#39;</span><span class="p">:</span> <span class="s1">&#39;gene_symbol&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pubchem_compound&#39;</span><span class="p">:</span> <span class="s1">&#39;pubchem&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pubchem_cid&#39;</span><span class="p">:</span> <span class="s1">&#39;pubchem&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">HMDB_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;hmdb&#39;</span><span class="p">:</span> <span class="s1">&#39;accession&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pubchem_cid&#39;</span><span class="p">:</span> <span class="s1">&#39;pubchem_compound&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;pubchem&#39;</span><span class="p">:</span> <span class="s1">&#39;pubchem_compound&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;phenolexplorer&#39;</span><span class="p">:</span> <span class="s1">&#39;phenol_explorer_compound&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;cas&#39;</span><span class="p">:</span> <span class="s1">&#39;cas_registry_number&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;formula&#39;</span><span class="p">:</span> <span class="s1">&#39;chemical_formula&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;inchi&#39;</span><span class="p">:</span> <span class="s1">&#39;inchi&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;inchikey&#39;</span><span class="p">:</span> <span class="s1">&#39;inchikey&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;hmdb_name&#39;</span><span class="p">:</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;hmdb_synonym&#39;</span><span class="p">:</span> <span class="s1">&#39;synonyms&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;smiles&#39;</span><span class="p">:</span> <span class="s1">&#39;smiles&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;iupac&#39;</span><span class="p">:</span> <span class="s1">&#39;traditional_iupac&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="MappingInput">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.MappingInput.html#pypath.internals.input_formats.MappingInput">[docs]</a>
+<span class="k">class</span> <span class="nc">MappingInput</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="n">_resource_id_types</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="MappingInput.__init__">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.MappingInput.html#pypath.internals.input_formats.MappingInput.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">type_</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">resource_id_type_a</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">resource_id_type_b</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">input_method</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">type_</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_type_a</span> <span class="o">=</span> <span class="n">id_type_a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_type_b</span> <span class="o">=</span> <span class="n">id_type_b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resource_id_type_a</span> <span class="o">=</span> <span class="n">resource_id_type_a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resource_id_type_b</span> <span class="o">=</span> <span class="n">resource_id_type_b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">ncbi_tax_id</span> <span class="ow">or</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;default_organism&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_method</span> <span class="o">=</span> <span class="n">input_method</span></div>
+
+
+
+    <span class="k">def</span> <span class="nf">_resource_id_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">side</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_id_type</span><span class="p">(</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;id_type_</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">side</span><span class="p">),</span>
+            <span class="n">override</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;resource_id_type_</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">side</span><span class="p">),</span>
+        <span class="p">)</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_resource_id_type_a</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resource_id_type</span><span class="p">(</span><span class="n">side</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_resource_id_type_b</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resource_id_type</span><span class="p">(</span><span class="n">side</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">resource_id_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">id_type</span><span class="p">,</span> <span class="n">override</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="n">override</span> <span class="ow">or</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_resource_id_types</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_type</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id_type_a</span> <span class="o">==</span> <span class="n">other</span> <span class="ow">or</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id_type_b</span> <span class="o">==</span> <span class="n">other</span> <span class="ow">or</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_resource_id_type_a</span> <span class="o">==</span> <span class="n">other</span> <span class="ow">or</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_resource_id_type_b</span> <span class="o">==</span> <span class="n">other</span>
+        <span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">swap_sides</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_type_a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_type_b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_type_b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_type_a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resource_id_type_a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource_id_type_b</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resource_id_type_b</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resource_id_type_a</span><span class="p">,</span>
+        <span class="p">)</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">possible</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">id_type_b</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+
+        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="n">id_type</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_resource_id_types</span> <span class="ow">or</span>
+                <span class="n">id_type</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_resource_id_types</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">id_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">id_type_a</span><span class="p">,</span> <span class="n">id_type_b</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="FileMapping">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.FileMapping.html#pypath.internals.input_formats.FileMapping">[docs]</a>
+<span class="k">class</span> <span class="nc">FileMapping</span><span class="p">(</span><span class="n">MappingInput</span><span class="p">):</span>
+
+<div class="viewcode-block" id="FileMapping.__init__">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.FileMapping.html#pypath.internals.input_formats.FileMapping.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span><span class="p">,</span>
+            <span class="n">input_</span><span class="p">,</span>
+            <span class="n">col_a</span><span class="p">,</span>
+            <span class="n">col_b</span><span class="p">,</span>
+            <span class="n">separator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">entity_type</span> <span class="o">=</span> <span class="s1">&#39;protein&#39;</span><span class="p">,</span>
+        <span class="p">):</span>
+
+        <span class="n">MappingInput</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">type_</span> <span class="o">=</span> <span class="s1">&#39;file&#39;</span><span class="p">,</span>
+            <span class="n">id_type_a</span> <span class="o">=</span> <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span> <span class="o">=</span> <span class="n">id_type_b</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">ncbi_tax_id</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="n">input_</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_a</span> <span class="o">=</span> <span class="n">col_a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">col_b</span> <span class="o">=</span> <span class="n">col_b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">separator</span> <span class="o">=</span> <span class="n">separator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">header</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entity_type</span> <span class="o">=</span> <span class="n">entity_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;organism&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ncbi_tax_id</span><span class="p">}</span></div>
+
+
+
+    <span class="k">def</span> <span class="nf">set_organism</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ncbi_tax_id</span><span class="p">):</span>
+
+        <span class="n">other_organism</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">other_organism</span><span class="o">.</span><span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">ncbi_tax_id</span>
+
+        <span class="k">if</span> <span class="s1">&#39;organism&#39;</span> <span class="ow">in</span> <span class="n">other_organism</span><span class="o">.</span><span class="n">input_args</span><span class="p">:</span>
+
+            <span class="n">other_organism</span><span class="o">.</span><span class="n">input_args</span><span class="p">[</span><span class="s1">&#39;organism&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ncbi_tax_id</span>
+
+        <span class="k">return</span> <span class="n">other_organism</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">possible</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">id_type_b</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+
+<div class="viewcode-block" id="UniprotMapping">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.UniprotMapping.html#pypath.internals.input_formats.UniprotMapping">[docs]</a>
+<span class="k">class</span> <span class="nc">UniprotMapping</span><span class="p">(</span><span class="n">MappingInput</span><span class="p">):</span>
+
+    <span class="n">_resource_id_type_b</span> <span class="o">=</span> <span class="s1">&#39;accession&#39;</span>
+    <span class="n">_resource_id_types</span> <span class="o">=</span> <span class="n">AC_QUERY</span>
+
+<div class="viewcode-block" id="UniprotMapping.__init__">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.UniprotMapping.html#pypath.internals.input_formats.UniprotMapping.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span> <span class="o">=</span> <span class="s1">&#39;uniprot&#39;</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="mi">9606</span><span class="p">,</span>
+            <span class="n">swissprot</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Defines an ID conversion table to retrieve from UniProt.</span>
+
+<span class="sd">        id_type : str</span>
+<span class="sd">            Type of accession numbers you would like to translate.</span>
+<span class="sd">        target_id_type : str</span>
+<span class="sd">            Type of accession numbers you would like to translate to.</span>
+<span class="sd">        tax : int</span>
+<span class="sd">            NCBI Taxonomy ID of the organism of interest.</span>
+<span class="sd">        swissprot : str</span>
+<span class="sd">            Look for SwissProt or Trembl.</span>
+<span class="sd">            Passed directly to UniProt`s `reviewed` parameter. `yes` or `no`</span>
+<span class="sd">            To fetch Trembl and SwissProt together, set value to None.</span>
+<span class="sd">        mapping : bool</span>
+<span class="sd">            Get the data from UniProt`s programmatic access query interface,</span>
+<span class="sd">            (uniprot.org/uniprot) or the batch retrieval/id mapping service</span>
+<span class="sd">            (uniprot.org/mapping). These have slightly different APIs and</span>
+<span class="sd">            capabilities. Some IDs can be obtained from the former, some</span>
+<span class="sd">            from the latter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="s1">&#39;uniprot&#39;</span>
+
+        <span class="n">MappingInput</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">type_</span> <span class="o">=</span> <span class="s1">&#39;uniprot&#39;</span><span class="p">,</span>
+            <span class="n">id_type_a</span> <span class="o">=</span> <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span> <span class="o">=</span> <span class="n">id_type_b</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">ncbi_tax_id</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ncbi_tax_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">typ</span> <span class="o">=</span> <span class="s1">&#39;protein&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">swissprot</span> <span class="o">=</span> <span class="n">swissprot</span></div>
+
+
+
+    <span class="k">def</span> <span class="nf">set_organism</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ncbi_tax_id</span><span class="p">):</span>
+
+        <span class="n">other_organism</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">other_organism</span><span class="o">.</span><span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">ncbi_tax_id</span>
+        <span class="k">return</span> <span class="n">other_organism</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">field</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="n">AC_QUERY</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_type_a</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,))[</span><span class="mi">0</span><span class="p">]</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">subfield</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="n">AC_QUERY</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_type_a</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="UniprotMapping.resource_id_type">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.UniprotMapping.html#pypath.internals.input_formats.UniprotMapping.resource_id_type">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">resource_id_type</span><span class="p">(</span><span class="n">id_type</span><span class="p">,</span> <span class="n">override</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        For an ID type label used in pypath, returns the one used in the</span>
+<span class="sd">        UniProt web service. If the label is not available in the built in</span>
+<span class="sd">        list None is returned.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">            (str): The ID type label used by UniProt; None if the input</span>
+<span class="sd">                label is not known.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">id_type</span> <span class="o">=</span> <span class="n">AC_QUERY</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_type</span><span class="p">,</span> <span class="n">id_type</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">id_type</span></div>
+
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">possible</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">id_type_b</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+
+        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="n">id_type</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_resource_id_types</span> <span class="ow">or</span>
+                <span class="n">id_type</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_resource_id_types</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="ow">or</span>
+                <span class="n">id_type</span> <span class="o">==</span> <span class="s1">&#39;uniprot&#39;</span> <span class="ow">or</span>
+                <span class="n">id_type</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;xref_&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">id_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">id_type_a</span><span class="p">,</span> <span class="n">id_type_b</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="UniprotListMapping">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.UniprotListMapping.html#pypath.internals.input_formats.UniprotListMapping">[docs]</a>
+<span class="k">class</span> <span class="nc">UniprotListMapping</span><span class="p">(</span><span class="n">MappingInput</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provides parameters for downloading mapping table from UniProt</span>
+<span class="sd">    `Upload Lists` webservice.</span>
+
+<span class="sd">    :arg str id_type_a:</span>
+<span class="sd">        Custom name for one of the ID types.</span>
+<span class="sd">    :arg str id_type_b:</span>
+<span class="sd">        Custom name for the other ID type.</span>
+<span class="sd">    :arg str uniprot_id_type_a:</span>
+<span class="sd">        This is the symbol the UniProt webservice uses for the first</span>
+<span class="sd">        name type. These are included in the module and set</span>
+<span class="sd">        automatically, the argument only gives a way to override this.</span>
+<span class="sd">    :arg str uniprot_id_type_b:</span>
+<span class="sd">        Same as above just for the other ID type.</span>
+<span class="sd">    :arg bool swissprot:</span>
+<span class="sd">        Download data only for SwissProt IDs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_resource_id_types</span> <span class="o">=</span> <span class="n">AC_MAPPING</span>
+    <span class="n">_from_uniprot</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;uniprot&#39;</span><span class="p">:</span> <span class="s1">&#39;UniProtKB_AC-ID&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;swissprot&#39;</span><span class="p">:</span> <span class="s1">&#39;UniProtKB_AC-ID&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;trembl&#39;</span><span class="p">:</span> <span class="s1">&#39;UniProtKB_AC-ID&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">_to_uniprot</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;uniprot&#39;</span><span class="p">:</span> <span class="s1">&#39;UniProtKB&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;swissprot&#39;</span><span class="p">:</span> <span class="s1">&#39;UniProtKB-Swiss-Prot&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;trembl&#39;</span><span class="p">:</span> <span class="s1">&#39;UniProtKB&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+<div class="viewcode-block" id="UniprotListMapping.__init__">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.UniprotListMapping.html#pypath.internals.input_formats.UniprotListMapping.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span><span class="p">,</span>
+            <span class="n">uniprot_id_type_a</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">uniprot_id_type_b</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="mi">9606</span><span class="p">,</span>
+            <span class="n">swissprot</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">):</span>
+
+        <span class="n">MappingInput</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">type_</span> <span class="o">=</span> <span class="s1">&#39;uniprot_list&#39;</span><span class="p">,</span>
+            <span class="n">id_type_a</span> <span class="o">=</span> <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span> <span class="o">=</span> <span class="n">id_type_b</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">ncbi_tax_id</span><span class="p">,</span>
+            <span class="n">resource_id_type_a</span> <span class="o">=</span> <span class="n">uniprot_id_type_a</span><span class="p">,</span>
+            <span class="n">resource_id_type_b</span> <span class="o">=</span> <span class="n">uniprot_id_type_b</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_swissprot</span><span class="p">(</span><span class="n">swissprot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ac_mapping</span> <span class="o">=</span> <span class="n">AC_MAPPING</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_uniprot_types</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entity_type</span> <span class="o">=</span> <span class="s1">&#39;protein&#39;</span></div>
+
+
+
+    <span class="k">def</span> <span class="nf">set_organism</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ncbi_tax_id</span><span class="p">):</span>
+
+        <span class="n">other_organism</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">other_organism</span><span class="o">.</span><span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">ncbi_tax_id</span>
+        <span class="k">return</span> <span class="n">other_organism</span>
+
+
+    <span class="k">def</span> <span class="nf">swap_sides</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">MappingInput</span><span class="o">.</span><span class="n">swap_sides</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_uniprot_types</span><span class="p">()</span>
+
+
+    <span class="k">def</span> <span class="nf">_update_uniprot_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">uniprot_id_type_a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resource_id_type_a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uniprot_id_type_b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resource_id_type_b</span>
+
+
+    <span class="k">def</span> <span class="nf">_resource_id_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">side</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+        <span class="n">uniprot_id_types</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_from_uniprot</span><span class="p">,</span>
+            <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_uniprot</span><span class="p">,</span>
+        <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">side</span><span class="p">)</span>
+
+        <span class="n">id_type</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;id_type_</span><span class="si">{</span><span class="n">side</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">uniprot_id_types</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">id_type</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_resource_id_types</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_type</span><span class="p">,</span> <span class="n">id_type</span><span class="p">)</span>
+        <span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_set_swissprot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">swissprot</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;swissprot&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;trembl&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;uniprot&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">swissprot</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+
+            <span class="n">swissprot</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">id_type_a</span><span class="p">,</span>
+                <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id_type_b</span><span class="p">,</span> <span class="n">swissprot</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">swissprot</span> <span class="o">=</span> <span class="n">swissprot</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_uniprotkb_id_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">id_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+
+        <span class="k">return</span> <span class="n">id_type</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_from_uniprot</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">possible</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">id_type_b</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+
+        <span class="n">id_type_a</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_from_uniprot</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_type_a</span><span class="p">,</span> <span class="n">id_type_a</span><span class="p">)</span>
+        <span class="n">id_type_a</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_resource_id_types</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_type_a</span><span class="p">,</span> <span class="n">id_type_a</span><span class="p">)</span>
+        <span class="n">id_type_b</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_to_uniprot</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_type_b</span><span class="p">,</span> <span class="n">id_type_b</span><span class="p">)</span>
+        <span class="n">id_type_b</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_resource_id_types</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_type_b</span><span class="p">,</span> <span class="n">id_type_b</span><span class="p">)</span>
+
+        <span class="n">pairs</span> <span class="o">=</span> <span class="n">uniprot_input</span><span class="o">.</span><span class="n">idmapping_idtypes</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">id_type_a</span><span class="p">,</span> <span class="n">id_type_b</span><span class="p">)</span> <span class="ow">in</span> <span class="n">pairs</span></div>
+
+
+
+<div class="viewcode-block" id="ProMapping">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.ProMapping.html#pypath.internals.input_formats.ProMapping">[docs]</a>
+<span class="k">class</span> <span class="nc">ProMapping</span><span class="p">(</span><span class="n">MappingInput</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provides parameters for mapping table from the Protein Ontology</span>
+<span class="sd">    Consortium.</span>
+
+<span class="sd">    :arg str id_type_a:</span>
+<span class="sd">        Custom name for one of the ID types.</span>
+<span class="sd">    :arg str id_type_b:</span>
+<span class="sd">        Custom name for the other ID type.</span>
+<span class="sd">    :arg str pro_id_type_a:</span>
+<span class="sd">        This is the symbol PRO uses to label the IDs.</span>
+<span class="sd">        These are included in the module and set</span>
+<span class="sd">        automatically, the argument only gives a way to override this.</span>
+<span class="sd">    :arg str pro_id_type_b:</span>
+<span class="sd">        Same as above just for the other ID type.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_resource_id_types</span> <span class="o">=</span> <span class="n">PRO_MAPPING</span>
+
+<div class="viewcode-block" id="ProMapping.__init__">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.ProMapping.html#pypath.internals.input_formats.ProMapping.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">pro_id_type_a</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">pro_id_type_b</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">NOT_ORGANISM_SPECIFIC</span><span class="p">,</span>
+        <span class="p">):</span>
+
+        <span class="n">to_pro</span> <span class="o">=</span> <span class="n">id_type_a</span> <span class="o">!=</span> <span class="s1">&#39;pro&#39;</span>
+        <span class="n">id_type</span> <span class="o">=</span> <span class="n">id_type_a</span> <span class="k">if</span> <span class="n">to_pro</span> <span class="k">else</span> <span class="n">id_type_b</span>
+        <span class="n">pro_id_type</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">pro_id_type_a</span> <span class="k">if</span> <span class="n">to_pro</span> <span class="k">else</span> <span class="n">pro_id_type_b</span>
+        <span class="p">)</span>
+
+        <span class="n">MappingInput</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">type_</span> <span class="o">=</span> <span class="s1">&#39;pro&#39;</span><span class="p">,</span>
+            <span class="n">id_type_a</span> <span class="o">=</span> <span class="s1">&#39;pro&#39;</span><span class="p">,</span>
+            <span class="n">id_type_b</span> <span class="o">=</span> <span class="n">id_type</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">resource_id_type_a</span> <span class="o">=</span> <span class="n">pro_id_type_a</span><span class="p">,</span>
+            <span class="n">resource_id_type_b</span> <span class="o">=</span> <span class="n">pro_id_type_b</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to_pro</span> <span class="o">=</span> <span class="n">to_pro</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_type</span> <span class="o">=</span> <span class="n">id_type</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pro_mapping</span> <span class="o">=</span> <span class="n">PRO_MAPPING</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pro_id_type</span> <span class="o">=</span> <span class="n">pro_id_type</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">pro_mapping</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id_type_b</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">entity_type</span> <span class="o">=</span> <span class="s1">&#39;protein&#39;</span></div>
+
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">possible</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">id_type_b</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+
+        <span class="n">id_types</span> <span class="o">=</span> <span class="p">{</span><span class="n">id_type_a</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="n">id_type_b</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">id_types</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;pro&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span>
+            <span class="p">(</span>
+                <span class="nb">list</span><span class="p">(</span><span class="n">id_types</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resource_id_types</span> <span class="ow">or</span>
+                <span class="nb">list</span><span class="p">(</span><span class="n">id_types</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resource_id_types</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="BiomartMapping">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.BiomartMapping.html#pypath.internals.input_formats.BiomartMapping">[docs]</a>
+<span class="k">class</span> <span class="nc">BiomartMapping</span><span class="p">(</span><span class="n">MappingInput</span><span class="p">):</span>
+
+    <span class="n">_resource_id_types</span> <span class="o">=</span> <span class="n">BIOMART_MAPPING</span>
+
+<div class="viewcode-block" id="BiomartMapping.__init__">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.BiomartMapping.html#pypath.internals.input_formats.BiomartMapping.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">transcript</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">biomart_id_type_a</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">biomart_id_type_b</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="mi">9606</span><span class="p">,</span>
+        <span class="p">):</span>
+
+        <span class="n">MappingInput</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">type_</span> <span class="o">=</span> <span class="s1">&#39;biomart&#39;</span><span class="p">,</span>
+            <span class="n">id_type_a</span> <span class="o">=</span> <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span> <span class="o">=</span> <span class="n">id_type_b</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">ncbi_tax_id</span><span class="p">,</span>
+            <span class="n">resource_id_type_a</span> <span class="o">=</span> <span class="n">biomart_id_type_a</span><span class="p">,</span>
+            <span class="n">resource_id_type_b</span> <span class="o">=</span> <span class="n">biomart_id_type_b</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">biomart_id_type_a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resource_id_type_a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">biomart_id_type_b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resource_id_type_b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attrs</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">biomart_id_type_a</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">biomart_id_type_b</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">biomart_mapping</span> <span class="o">=</span> <span class="n">BIOMART_MAPPING</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="UnichemMapping">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.UnichemMapping.html#pypath.internals.input_formats.UnichemMapping">[docs]</a>
+<span class="k">class</span> <span class="nc">UnichemMapping</span><span class="p">(</span><span class="n">MappingInput</span><span class="p">):</span>
+
+    <span class="n">_resource_id_types</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">id_type</span><span class="p">:</span> <span class="n">id_type</span>
+        <span class="k">for</span> <span class="n">id_type</span> <span class="ow">in</span> <span class="n">unichem_input</span><span class="o">.</span><span class="n">unichem_sources</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+    <span class="p">}</span>
+
+<div class="viewcode-block" id="UnichemMapping.__init__">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.UnichemMapping.html#pypath.internals.input_formats.UnichemMapping.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">NOT_ORGANISM_SPECIFIC</span><span class="p">,</span>
+        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Paramaters for UniChem based ID translation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_type_a:</span>
+<span class="sd">                Custom name for one of the ID types.</span>
+<span class="sd">            id_type_b:</span>
+<span class="sd">                Custom name for the other ID type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">MappingInput</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">type_</span> <span class="o">=</span> <span class="s1">&#39;unichem&#39;</span><span class="p">,</span>
+            <span class="n">id_type_a</span> <span class="o">=</span> <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span> <span class="o">=</span> <span class="n">id_type_b</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">NOT_ORGANISM_SPECIFIC</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="RampMapping">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.RampMapping.html#pypath.internals.input_formats.RampMapping">[docs]</a>
+<span class="k">class</span> <span class="nc">RampMapping</span><span class="p">(</span><span class="n">MappingInput</span><span class="p">):</span>
+
+    <span class="n">_resource_id_types</span> <span class="o">=</span> <span class="n">RAMP_MAPPING</span>
+
+<div class="viewcode-block" id="RampMapping.__init__">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.RampMapping.html#pypath.internals.input_formats.RampMapping.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">NOT_ORGANISM_SPECIFIC</span><span class="p">,</span>
+        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Paramaters for ID translation tables from the RaMP database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_type_a:</span>
+<span class="sd">                Custom name for one of the ID types.</span>
+<span class="sd">            id_type_b:</span>
+<span class="sd">                Custom name for the other ID type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">MappingInput</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">type_</span> <span class="o">=</span> <span class="s1">&#39;ramp&#39;</span><span class="p">,</span>
+            <span class="n">id_type_a</span> <span class="o">=</span> <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span> <span class="o">=</span> <span class="n">id_type_b</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">NOT_ORGANISM_SPECIFIC</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="HmdbMapping">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.HmdbMapping.html#pypath.internals.input_formats.HmdbMapping">[docs]</a>
+<span class="k">class</span> <span class="nc">HmdbMapping</span><span class="p">(</span><span class="n">MappingInput</span><span class="p">):</span>
+
+    <span class="n">_resource_id_types</span> <span class="o">=</span> <span class="n">HMDB_MAPPING</span>
+
+<div class="viewcode-block" id="HmdbMapping.__init__">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.HmdbMapping.html#pypath.internals.input_formats.HmdbMapping.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">NOT_ORGANISM_SPECIFIC</span><span class="p">,</span>
+        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Paramaters for ID translation tables from the</span>
+<span class="sd">        Human Metabolome Database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_type_a:</span>
+<span class="sd">                Custom name for one of the ID types.</span>
+<span class="sd">            id_type_b:</span>
+<span class="sd">                Custom name for the other ID type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">MappingInput</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">type_</span> <span class="o">=</span> <span class="s1">&#39;hmdb&#39;</span><span class="p">,</span>
+            <span class="n">id_type_a</span> <span class="o">=</span> <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span> <span class="o">=</span> <span class="n">id_type_b</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">_const</span><span class="o">.</span><span class="n">NOT_ORGANISM_SPECIFIC</span><span class="p">,</span>
+            <span class="n">input_method</span> <span class="o">=</span> <span class="s1">&#39;hmdb.metabolites_mapping&#39;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ArrayMapping">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.ArrayMapping.html#pypath.internals.input_formats.ArrayMapping">[docs]</a>
+<span class="k">class</span> <span class="nc">ArrayMapping</span><span class="p">(</span><span class="n">MappingInput</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provides parameters for microarray probe mapping tables.</span>
+
+<span class="sd">    :arg str id_type_a:</span>
+<span class="sd">        Custom name for one of the ID types.</span>
+<span class="sd">    :arg str id_type_b:</span>
+<span class="sd">        Custom name for the other ID type.</span>
+<span class="sd">    :arg str pro_id_type_a:</span>
+<span class="sd">        This is the symbol PRO uses to label the IDs.</span>
+<span class="sd">        These are included in the module and set</span>
+<span class="sd">        automatically, the argument only gives a way to override this.</span>
+<span class="sd">    :arg str pro_id_type_b:</span>
+<span class="sd">        Same as above just for the other ID type.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_resource_id_types</span> <span class="o">=</span> <span class="n">ARRAY_MAPPING</span>
+
+<div class="viewcode-block" id="ArrayMapping.__init__">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.ArrayMapping.html#pypath.internals.input_formats.ArrayMapping.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="mi">9606</span><span class="p">,</span>
+        <span class="p">):</span>
+
+        <span class="n">MappingInput</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">type_</span> <span class="o">=</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+            <span class="n">id_type_a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_id_type</span><span class="p">(</span><span class="n">id_type_a</span><span class="p">),</span>
+            <span class="n">id_type_b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_id_type</span><span class="p">(</span><span class="n">id_type_b</span><span class="p">),</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">ncbi_tax_id</span><span class="p">,</span>
+            <span class="n">resource_id_type_a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_id_type</span><span class="p">(</span><span class="n">id_type_a</span><span class="p">),</span>
+            <span class="n">resource_id_type_b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_id_type</span><span class="p">(</span><span class="n">id_type_b</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ensembl_id</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resource_id_type_a</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_type_a</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;ens&#39;</span><span class="p">)</span> <span class="k">else</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resource_id_type_b</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">array_id</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resource_id_type_a</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id_type_a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resource_id_types</span> <span class="k">else</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resource_id_type_b</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">entity_type</span> <span class="o">=</span> <span class="s1">&#39;protein&#39;</span></div>
+
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_process_id_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">id_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fail</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+
+        <span class="n">id_type</span> <span class="o">=</span> <span class="n">id_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">id_type</span> <span class="o">=</span> <span class="s1">&#39;affy&#39;</span> <span class="k">if</span> <span class="n">id_type</span> <span class="o">==</span> <span class="s1">&#39;affymetrix&#39;</span> <span class="k">else</span> <span class="n">id_type</span>
+        <span class="n">id_type</span> <span class="o">=</span> <span class="s1">&#39;ensg&#39;</span> <span class="k">if</span> <span class="n">id_type</span> <span class="o">==</span> <span class="s1">&#39;ensembl&#39;</span> <span class="k">else</span> <span class="n">id_type</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">id_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_resource_id_types</span> <span class="ow">and</span>
+            <span class="n">id_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;ensg&#39;</span><span class="p">,</span> <span class="s1">&#39;enst&#39;</span><span class="p">,</span> <span class="s1">&#39;ensp&#39;</span><span class="p">}</span>
+        <span class="p">):</span>
+
+            <span class="k">if</span> <span class="n">fail</span><span class="p">:</span>
+
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="s1">&#39;Unknown ID type for microarray probe mapping: `</span><span class="si">%s</span><span class="s1">`. &#39;</span>
+                    <span class="s1">&#39;Microarray ID types include `affy`, `illumina`, `agilent`, &#39;</span>
+                    <span class="s1">&#39;`codelink` and `phalanx`, all these can be translated to &#39;</span>
+                    <span class="s1">&#39;Ensembl gene, transcript or peptide IDs: `ensg`, `enst` &#39;</span>
+                    <span class="s1">&#39;or `ensp`. If you translate to some other ID type, do it &#39;</span>
+                    <span class="s1">&#39;in multiple steps.&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">id_type</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">_logger</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">id_type</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">possible</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">id_type_b</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_process_id_type</span><span class="p">(</span><span class="n">id_type_a</span><span class="p">,</span> <span class="n">fail</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">and</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_process_id_type</span><span class="p">(</span><span class="n">id_type_b</span><span class="p">,</span> <span class="n">fail</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="PickleMapping">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.PickleMapping.html#pypath.internals.input_formats.PickleMapping">[docs]</a>
+<span class="k">class</span> <span class="nc">PickleMapping</span><span class="p">(</span><span class="n">MappingInput</span><span class="p">):</span>
+
+
+<div class="viewcode-block" id="PickleMapping.__init__">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.PickleMapping.html#pypath.internals.input_formats.PickleMapping.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span><span class="p">,</span>
+            <span class="n">fname</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">):</span>
+
+        <span class="n">MappingInput</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">type_</span> <span class="o">=</span> <span class="s1">&#39;pickle&#39;</span><span class="p">,</span>
+            <span class="n">id_type_a</span> <span class="o">=</span> <span class="n">id_type_a</span><span class="p">,</span>
+            <span class="n">id_type_b</span> <span class="o">=</span> <span class="n">id_type_b</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">ncbi_tax_id</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fname</span> <span class="o">=</span> <span class="n">fname</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="NetworkInput">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.NetworkInput.html#pypath.internals.input_formats.NetworkInput">[docs]</a>
+<span class="k">class</span> <span class="nc">NetworkInput</span><span class="p">:</span>
+
+
+<div class="viewcode-block" id="NetworkInput.__init__">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.NetworkInput.html#pypath.internals.input_formats.NetworkInput.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
+            <span class="n">separator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">id_col_a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="n">id_col_b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="n">id_type_a</span> <span class="o">=</span> <span class="s2">&quot;uniprot&quot;</span><span class="p">,</span>
+            <span class="n">id_type_b</span> <span class="o">=</span> <span class="s2">&quot;uniprot&quot;</span><span class="p">,</span>
+            <span class="n">entity_type_a</span> <span class="o">=</span> <span class="s2">&quot;protein&quot;</span><span class="p">,</span>
+            <span class="n">entity_type_b</span> <span class="o">=</span> <span class="s2">&quot;protein&quot;</span><span class="p">,</span>
+            <span class="n">is_directed</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">sign</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="nb">input</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">references</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">extra_edge_attrs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">extra_node_attrs_a</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">extra_node_attrs_b</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">taxon_a</span> <span class="o">=</span> <span class="mi">9606</span><span class="p">,</span>
+            <span class="n">taxon_b</span> <span class="o">=</span> <span class="mi">9606</span><span class="p">,</span>
+            <span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="mi">9606</span><span class="p">,</span>
+            <span class="n">interaction_type</span> <span class="o">=</span> <span class="s1">&#39;post_translational&#39;</span><span class="p">,</span>
+            <span class="n">positive_filters</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">negative_filters</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">mark_source</span>  <span class="o">=</span>  <span class="kc">None</span><span class="p">,</span>
+            <span class="n">mark_target</span>  <span class="o">=</span>  <span class="kc">None</span><span class="p">,</span>
+            <span class="n">input_args</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">curl_args</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">must_have_references</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="n">huge</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">resource</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">unique_fields</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">expand_complexes</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">data_model</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">allow_loops</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">only_default_organism</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param str mark_source:</span>
+<span class="sd">            Creates a boolean vertex attribute and sets it True for the</span>
+<span class="sd">            source vertex of directed interactions from this particular</span>
+<span class="sd">            resource.</span>
+<span class="sd">        :param str mark_target:</span>
+<span class="sd">            Same as ``mark_source`` but for target vertices.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">entity_type_a</span> <span class="o">=</span> <span class="n">entity_type_a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entity_type_b</span> <span class="o">=</span> <span class="n">entity_type_b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_col_a</span> <span class="o">=</span> <span class="n">id_col_a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_col_b</span> <span class="o">=</span> <span class="n">id_col_b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_type_a</span> <span class="o">=</span> <span class="n">id_type_a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_type_b</span> <span class="o">=</span> <span class="n">id_type_b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_directed</span> <span class="o">=</span> <span class="n">is_directed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="nb">input</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extra_edge_attrs</span> <span class="o">=</span> <span class="n">extra_edge_attrs</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extra_node_attrs_a</span> <span class="o">=</span> <span class="n">extra_node_attrs_a</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extra_node_attrs_b</span> <span class="o">=</span> <span class="n">extra_node_attrs_b</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">separator</span> <span class="o">=</span> <span class="n">separator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">header</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refs</span> <span class="o">=</span> <span class="n">references</span> <span class="ow">or</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sign</span> <span class="o">=</span> <span class="n">sign</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">taxon_a</span> <span class="o">=</span> <span class="n">taxon_a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">taxon_b</span> <span class="o">=</span> <span class="n">taxon_b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ncbi_tax_id</span> <span class="o">=</span> <span class="n">ncbi_tax_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interaction_type</span> <span class="o">=</span> <span class="n">interaction_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">positive_filters</span> <span class="o">=</span> <span class="n">positive_filters</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">negative_filters</span> <span class="o">=</span> <span class="n">negative_filters</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_args</span> <span class="o">=</span> <span class="n">input_args</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curl_args</span> <span class="o">=</span> <span class="n">curl_args</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">must_have_references</span> <span class="o">=</span> <span class="n">must_have_references</span> <span class="ow">and</span> <span class="nb">bool</span><span class="p">(</span><span class="n">references</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">huge</span> <span class="o">=</span> <span class="n">huge</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">resource</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">resource</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mark_source</span> <span class="o">=</span> <span class="n">mark_source</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mark_target</span> <span class="o">=</span> <span class="n">mark_target</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unique_fields</span> <span class="o">=</span> <span class="n">unique_fields</span> <span class="ow">or</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expand_complexes</span> <span class="o">=</span> <span class="n">expand_complexes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_model</span> <span class="o">=</span> <span class="n">data_model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">allow_loops</span> <span class="o">=</span> <span class="n">allow_loops</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">only_default_organism</span> <span class="o">=</span> <span class="n">only_default_organism</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span></div>
+
+
+
+    <span class="k">def</span> <span class="nf">_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="n">value</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span> <span class="k">else</span> <span class="bp">cls</span><span class="p">(</span><span class="n">compact</span> <span class="o">=</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ReadList">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.ReadList.html#pypath.internals.input_formats.ReadList">[docs]</a>
+<span class="k">class</span> <span class="nc">ReadList</span><span class="p">:</span>
+
+
+<div class="viewcode-block" id="ReadList.__init__">
+<a class="viewcode-back" href="../../../api/pypath.internals.input_formats.ReadList.html#pypath.internals.input_formats.ReadList.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;unknown&#39;</span><span class="p">,</span>
+            <span class="n">separator</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">id_col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="n">id_type</span> <span class="o">=</span> <span class="s1">&#39;uniprot&#39;</span><span class="p">,</span>
+            <span class="n">entity_type</span> <span class="o">=</span> <span class="s1">&#39;protein&#39;</span><span class="p">,</span>
+            <span class="nb">input</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">extra_attrs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">entity_type</span> <span class="o">=</span> <span class="n">entity_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_col</span> <span class="o">=</span> <span class="n">id_col</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id_type</span> <span class="o">=</span> <span class="n">id_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="nb">input</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extra_attrs</span> <span class="o">=</span> <span class="n">extra_attrs</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">separator</span> <span class="o">=</span> <span class="n">separator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">header</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toctree-l1 toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="../../../index.html">Welcome to pypath!</a></li>
+<li class="toctree-l1 toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="../../../webservice.html">Webservice</a></li>
+<li class="toctree-l1 toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="../../../releasehistory.html">Release history</a></li>
+<li class="toctree-l1 toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="../../../reference.html">Reference</a></li>
+<li class="toctree-l1 toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="../../../notebooks/manual.html">The pypath book</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Denes Turei &lt;turei.denes@gmail.com&gt;, Nicolàs Palacio, Sebastian Lobentanzer, Olga Ivanova, Melih Darcan, Erva Ulusoy, Tennur Kilic, Omer Kaan Vural, Ahmet Rifaioglu, Charles Tapley Hoyt.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.2.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
